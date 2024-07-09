@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ItemDto {
+    private long id;
     @NotNull
     private String name;
     @NotNull

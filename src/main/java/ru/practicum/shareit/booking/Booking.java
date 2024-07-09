@@ -14,5 +14,4 @@ public class Booking {
     Item item;
     User booker;
     StatusBooking status;
-
 }

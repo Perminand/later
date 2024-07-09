@@ -3,9 +3,9 @@ package ru.practicum.shareit.item;
 import java.util.List;
 
 public interface ItemService {
-    List<Item> getItemsByUserId(long userId);
+    List<ItemDto> getItemsByUserId(long userId);
 
-    Item getById(long itemId);
+    ItemDto getById(long itemId);
 
     Item create(long userId, ItemDto item);
 

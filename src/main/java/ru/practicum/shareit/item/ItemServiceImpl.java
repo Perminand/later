@@ -17,13 +17,14 @@ public class ItemServiceImpl implements ItemService {
     private final UserService userService;
 
     @Override
-    public List<Item> getItemsByUserId(long userId) {
-        return itemRepository.getItems(userId);
+    public List<ItemDto> getItemsByUserId(long userId) {
+        return itemRepository.getItems(userId).stream().map(ItemMapper::toItemDto).toList();
     }
 
     @Override
-    public Item getById(long itemId) {
-        return itemRepository.getById(itemId).orElseThrow(() -> new NullPointerException("Нет item с заданным id"));
+    public ItemDto getById(long itemId) {
+        return ItemMapper.toItemDto(itemRepository.getById(itemId)
+                .orElseThrow(() -> new NullPointerException("Нет item с заданным id")));
     }
 
 
@@ -48,7 +49,8 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item update(Long userId, long itemId, ItemDto itemDto) {
         User user = userService.getById(userId);
-        Item item = getById(itemId);
+        Item item = itemRepository.getById(itemId)
+                .orElseThrow(() -> new NullPointerException("Нет item с заданным id"));
         if(!Objects.equals(item.getOwner().getId(), user.getId())) {
             throw new EntityNotFoundException("Попытка изменения item не владельцем");
         }
@@ -70,11 +72,10 @@ public class ItemServiceImpl implements ItemService {
         if (text.isBlank()) {
             return List.of();
         } else {
-            List<ItemDto> itemDtoList = itemRepository.search(text)
+            return itemRepository.search(text)
                     .stream()
                     .filter(Item::getAvailable)
                     .map(ItemMapper::toItemDto).toList();
-            return itemDtoList;
         }
     }
 

@@ -14,13 +14,13 @@ public class ItemController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Item> getAll(@RequestHeader("X-Sharer-User-Id") Long userId) {
+    public List<ItemDto> getAll(@RequestHeader("X-Sharer-User-Id") Long userId) {
         return itemService.getItemsByUserId(userId);
     }
 
     @GetMapping("/{itemId}")
     @ResponseStatus(HttpStatus.OK)
-    public Item getById(@PathVariable("itemId") long itemId) {
+    public ItemDto getById(@PathVariable("itemId") long itemId) {
         return itemService.getById(itemId);
     }
 
