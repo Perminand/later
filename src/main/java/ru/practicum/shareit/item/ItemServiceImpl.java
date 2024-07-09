@@ -49,7 +49,7 @@ public class ItemServiceImpl implements ItemService {
         User user = userService.getById(userId);
         Item item = getById(itemId);
         if(!Objects.equals(item.getOwner().getId(), user.getId())) {
-            throw new EntityNotFoundException("userId в запросе не соответсвует userId в хранилище");
+            throw new EntityNotFoundException("Попытка изменения item не владельцем");
         }
         if(itemDto.getName() != null) {
             item.setName(itemDto.getName());
@@ -66,9 +66,15 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemDto> search(String text) {
-        return itemRepository.search(text)
-                .stream()
-                .map(item -> ItemMapper.toItemDto(item)).toList();
+        if (text.isBlank()) {
+            return List.of();
+        } else {
+            List<ItemDto> itemDtoList = itemRepository.search(text)
+                    .stream()
+                    .filter(Item::getAvailable)
+                    .map(ItemMapper::toItemDto).toList();
+            return itemDtoList;
+        }
     }
 
     @Override

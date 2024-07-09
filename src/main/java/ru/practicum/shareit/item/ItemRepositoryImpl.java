@@ -2,10 +2,7 @@ package ru.practicum.shareit.item;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public class ItemRepositoryImpl implements ItemRepository{
@@ -37,7 +34,8 @@ public class ItemRepositoryImpl implements ItemRepository{
     public List<Item> search(String text) {
          List<Item> itemList = itemMap.values()
                 .stream()
-                .filter(item -> item.getName().contains(text)||item.getDescription().contains(text))
+                .filter(item -> item.getName().toLowerCase().contains(text.toLowerCase()) ||
+                        item.getDescription().toLowerCase().contains(text.toLowerCase()))
                 .toList();
         return itemList;
     }
