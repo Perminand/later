@@ -26,8 +26,9 @@ public class ItemController {
 
     @GetMapping("/search")
     @ResponseStatus(HttpStatus.OK)
-    public List<ItemDto> search(@RequestParam(name = "text") String text) {
-        return itemService.search(text);
+    public List<ItemDto> search(@RequestHeader("X-Sharer-User-Id") Long userId,
+                                @RequestParam(name = "text") String text) {
+        return itemService.search(userId, text);
     }
 
 

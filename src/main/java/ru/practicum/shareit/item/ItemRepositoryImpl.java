@@ -1,13 +1,21 @@
 package ru.practicum.shareit.item;
 
 import org.springframework.stereotype.Repository;
+import ru.practicum.shareit.request.ItemRequest;
+import ru.practicum.shareit.user.User;
 
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public class ItemRepositoryImpl implements ItemRepository{
     private final Map<Long, Item> itemMap = new HashMap<>();
+    private final Map<Long, ItemRequest> itemRequestMap = new HashMap<>();
     private long generateId = 0L;
+    private long generateIdRequest = 0L;
 
     @Override
     public List<Item> getItems(long userId) {
@@ -38,6 +46,12 @@ public class ItemRepositoryImpl implements ItemRepository{
                         item.getDescription().toLowerCase().contains(text.toLowerCase()))
                 .toList();
         return itemList;
+    }
+
+    @Override
+    public void createRequest(User user, String text) {
+        ItemRequest itemRequest = new ItemRequest(++generateIdRequest, text, user, LocalDateTime.now());
+        itemRequestMap.put(++generateIdRequest, itemRequest);
     }
 
     @Override

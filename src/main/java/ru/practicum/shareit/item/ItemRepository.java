@@ -1,5 +1,7 @@
 package ru.practicum.shareit.item;
 
+import ru.practicum.shareit.user.User;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -16,4 +18,6 @@ public interface ItemRepository {
     Item update(Item item);
 
     List<Item> search(String text);
+
+    void createRequest(User user, String text);
 }

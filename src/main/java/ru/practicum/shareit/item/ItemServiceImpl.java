@@ -68,8 +68,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemDto> search(String text) {
+    public List<ItemDto> search(Long userId, String text) {
         if (text.isBlank()) {
+            itemRepository.createRequest(userService.getById(userId), text);
             return List.of();
         } else {
             return itemRepository.search(text)
