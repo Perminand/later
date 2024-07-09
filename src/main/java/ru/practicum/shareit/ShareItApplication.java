@@ -1,11 +1,11 @@
-package ru.practicum;
+package ru.practicum.shareit;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LaterApplication {
+public class ShareItApplication {
     public static void main(String[] args) {
-        SpringApplication.run(LaterApplication.class);
+        SpringApplication.run(ShareItApplication.class);
     }
 }
