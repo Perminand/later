@@ -36,11 +36,12 @@ public class ItemServiceImpl implements ItemService {
         if (item.getDescription() == null || item.getDescription().isEmpty()) {
             throw new ValidationException("description не может быть null");
         }
-        item.setOwner(user);
         if(item.getAvailable() == null) {
             throw new ValidationException("available не может быть null");
         }
         Item newItem = ItemMapper.forItem(item);
+        newItem.setOwner(user);
+        newItem.setAvailable(item.getAvailable());
         return itemRepository.create(userId, newItem);
     }
 
